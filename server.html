@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Messages</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+
+        #server-messages {
+            text-align: left;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #message-textbox {
+            width: 100%;
+            height: 200px;
+            margin-top: 20px;
+            resize: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Server Messages</h1>
+
+    <div id="server-messages"></div>
+
+    <h2>Received Messages:</h2>
+    <textarea id="message-textbox" readonly></textarea>
+
+    <h2>Send Server Message:</h2>
+    <textarea id="server-response"></textarea>
+    <button id="send-server-message">Send</button>
+
+    <script>
+       // Function to fetch and display server messages
+function fetchServerMessages() {
+    var serverMessagesTextarea = document.getElementById('message-textbox');
+
+    // Fetch messages from the server using JavaScript (AJAX)
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '/get_messages', true);
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            var messages = JSON.parse(xhr.responseText);
+            // Concatenate received messages into a single string
+            var messageString = messages.join(' '); // Join messages with a space separator
+            // Display concatenated message in the textbox
+            serverMessagesTextarea.value = messageString;
+        }
+    };
+    xhr.send();
+}
+
+
+        // Function to send a server message
+        function fetchServerMessages() {
+    var serverMessagesTextarea = document.getElementById('message-textbox');
+
+    // Fetch messages from the server using JavaScript (AJAX)
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '/get_messages', true);
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            var messages = JSON.parse(xhr.responseText);
+            // Concatenate received messages into a single string
+            var messageString = messages.join(' ');
+            // Display concatenated message in the textbox
+            serverMessagesTextarea.value = messageString;
+        }
+    };
+    xhr.send();
+        }
+
+        // Attach event listener to the Send button after the DOM has loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('send-server-message').addEventListener('click', sendServerMessage);
+            // Fetch server messages when the page loads
+            fetchServerMessages();
+        });
+    </script>
+</body>
+
+</html>
